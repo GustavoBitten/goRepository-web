@@ -74,7 +74,7 @@ div {
 div ul{
   padding-right:50px ;
   display: inline-grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns:  auto auto;
   grid-column-gap: 30px;
   
   
@@ -85,6 +85,7 @@ div li {
   align-items: center;
   text-align: center;
   color: #fff;
+  flex-direction: column;
 }
 
 div li + li {

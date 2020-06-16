@@ -38,9 +38,11 @@ function App() {
   async function handleAddRepository() {
       
       const result = await api.post('/repositories',formData)
-      //getRepositoryList()
       
-      setRepositoryList([...repositoryList,result])
+      
+      const newRepository = result.data
+      
+      setRepositoryList([...repositoryList,newRepository])
       
     
 
@@ -75,6 +77,7 @@ function App() {
           <div className='groupItem' key={repository.id}>
             <li>
               <h1>{ repository.title }</h1>
+              <h3>{ repository.url }</h3>
             </li>
 
             <button onClick={()=> handleRemoveRepository(repository.id)}>
