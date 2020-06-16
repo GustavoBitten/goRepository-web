@@ -1,10 +1,30 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 
 import "./styles.css";
 
+import api from './services/api'
+
 function App() {
+
+  const [repositoryList,setRepositoryList] = useState([])
+
+  useEffect(()=>{
+
+    api.get('/repositories').then(response =>{
+      console.log(response.data)
+      return setRepositoryList(response.data)
+    })
+
+  },[])
+
+
   async function handleAddRepository() {
-    // TODO
+
+      const data = {}
+
+      api.post('/repositories',data)
+
+
   }
 
   async function handleRemoveRepository(id) {
@@ -12,18 +32,43 @@ function App() {
   }
 
   return (
-    <div>
-      <ul data-testid="repository-list">
-        <li>
-          Repositório 1
+    <div className="main">
 
-          <button onClick={() => handleRemoveRepository(1)}>
-            Remover
-          </button>
-        </li>
-      </ul>
+      <div id="header">
+        <h1>Go Repository</h1>
 
-      <button onClick={handleAddRepository}>Adicionar</button>
+      </div>
+      <div id='section'>
+        <ul data-testid="repository-list">
+
+          { repositoryList.map(repository => {
+          return (
+          <div className='groupItem'>
+            <li>
+              <h1>{ repository.title }</h1>
+            </li>
+
+            <button onClick={()=> handleRemoveRepository(repository.id)}>
+              Remover
+            </button>
+          </div>
+          )
+          })}
+
+        </ul>
+          <div id="formAdd">
+            <h2>Novo</h2>
+            <label htmlFor="">Título</label>
+            <input ></input>
+            <label htmlFor="">Url</label>
+            <input ></input>
+            <label htmlFor="">Tecnolocias</label>
+            <input ></input>
+
+
+            <button onClick={handleAddRepository}>Adicionar</button>
+          </div>
+      </div>
     </div>
   );
 }
